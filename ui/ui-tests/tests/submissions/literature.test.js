@@ -2,13 +2,25 @@ const { routes } = require('../../utils/constants');
 const { login, logout } = require('../../utils/user');
 
 async function selectDocType(page, docType) {
-  await page._client.send('Animation.setPlaybackRate', { playbackRate: 24 }); // force animations to run faster
   await page.click('[data-test-id=skip-import-button]');
-  await page.click('[data-test-id=document-type-select]');
+
+  const docTypeSelectSelector = '[data-test-id=document-type-select]';
+
+  await page.waitFor(docTypeSelectSelector);
+  await page.click(docTypeSelectSelector);
+
+  const openDocTypeSelectSelector = `.ant-select-open>${docTypeSelectSelector}`;
+  await page.waitFor(openDocTypeSelectSelector);
+
   await page.click(`[data-test-id=document-type-select-option-${docType}]`);
-  await page.click('body');
-  await page.waitFor('.ant-select-dropdown-hidden');
-  await page.waitFor(() => !document.querySelector('.ant-select-focused'));
+
+  await page.click('label');
+
+  await page.waitFor(
+    ctx => !document.querySelector(ctx.openSelectSelector),
+    {},
+    { openDocTypeSelectSelector }
+  );
 }
 
 describe('Literature Submission', () => {
