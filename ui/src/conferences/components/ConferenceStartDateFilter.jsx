@@ -51,7 +51,7 @@ function ConferenceStartDateFilter({ onChange, selection = '' }) {
 
   return (
     <Row className="pa3 bg-white mb3">
-      <AggregationBox name="Start Date">
+      <AggregationBox name="Start Date" className="mb3">
         <Row className="mb3" type="flex" align="middle" gutter={8}>
           <Col>
             <Switch

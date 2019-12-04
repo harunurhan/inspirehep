@@ -28,17 +28,17 @@ class AggregationFilters extends Component {
       pa3: !inline,
       pv3: inline,
     });
+    const aggregationEntries = aggregations && aggregations.entrySeq();
     return (
-      aggregations &&
+      aggregationEntries &&
       (numberOfResults > 0 || displayWhenNoResults) && (
         <Row className={rowClassName} type="flex" justify="space-between">
-          {aggregations
-            .entrySeq()
+          {aggregationEntries
             .filter(([, aggregation]) => aggregation.get('buckets').size > 0)
             .sort(AggregationFilters.compareAggregationEntries)
-            .map(([aggregationKey, aggregation]) => (
+            .map(([aggregationKey, aggregation], index) => (
               <Col
-                className={classnames({ 'md-pb3': inline })}
+                className={classnames({ 'md-pb3': inline, 'mb4':  !inline && index !== aggregationEntries.size - 1, 'mb3': !inline && index === aggregationEntries.size - 1})}
                 key={aggregationKey}
                 xs={24}
                 lg={inline ? 5 : 24}
