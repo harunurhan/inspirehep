@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
 import { Map, List } from 'immutable';
+import Joyride from 'react-joyride';
 
 import ContentBox from '../../common/components/ContentBox';
 import AuthorName from '../components/AuthorName';
@@ -43,15 +45,40 @@ import AuthorBAI from '../components/AuthorBAI';
 
 function renderNumberOfCiteablePapers(value) {
   return (
-    <NumberOfCiteablePapersContainer>{value}</NumberOfCiteablePapersContainer>
+    <NumberOfCiteablePapersContainer>
+      {value}
+    </NumberOfCiteablePapersContainer>
   );
 }
 
 function renderNumberOfPublishedPapers(value) {
   return (
-    <NumberOfPublishedPapersContainer>{value}</NumberOfPublishedPapersContainer>
+    <NumberOfPublishedPapersContainer>
+      <span data-guide-step="published-papers">
+        {value}
+      </span>
+    </NumberOfPublishedPapersContainer>
   );
 }
+
+const GUIDE_STEPS = [
+  {
+    target: '[data-guide-step="author-name"]',
+    content: 'Welcome to author profile',
+  },
+  {
+    target: '[data-guide-step="published-papers"]', // this is async, sometimes is not there, so can't be first step
+    content: 'You can click here to see only published papers of the author',
+  },
+  {
+    target: '[data-guide-step="citation-summary-graph"]',
+    content: 'You can click one of the bars on the visualisation to see corresponding results for the citation count range',
+  },
+  {
+    target: '[data-guide-step="checkbox-aggregation-option:10 authors or less"]',
+    content: 'You can click here to see papers written by 10 authors or less. This is particularly useful for filter out experimental stuff'
+  }
+];
 
 function DetailPage({
   record,
@@ -103,6 +130,13 @@ function DetailPage({
   ]);
   return (
     <>
+      <Joyride
+        spotlightClicks
+        // try to put this app global and then try if scrolling works
+        // try to wait all async requests properly
+        disableScrolling
+        steps={GUIDE_STEPS}
+      />
       <DocumentHead
         title={getAuthorDisplayName(name)}
         description={metaDescription}
@@ -131,7 +165,7 @@ function DetailPage({
                 <Row>
                   <Col>{deleted && <DeletedAlert />}</Col>
                 </Row>
-                <h2>
+                <h2 data-guide-step="author-name">
                   <AuthorName name={name} />
                   {currentPositions.size > 0 && (
                     <span className="pl1 f6">
@@ -181,7 +215,7 @@ function DetailPage({
                 <Col xs={24} md={24} lg={7}>
                   <CitationsByYearGraphContainer />
                 </Col>
-                <Col xs={24} md={24} lg={17}>
+                <Col data-guide-step="citation-summary-graph" xs={24} md={24} lg={17}>
                   <CitationSummaryGraphContainer
                     namespace={AUTHOR_PUBLICATIONS_NS}
                   />

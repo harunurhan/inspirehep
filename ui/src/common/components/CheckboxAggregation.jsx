@@ -117,6 +117,7 @@ class CheckboxAggregation extends Component {
     const { selectionMap } = this.state;
     const { splitDisplayName, bucketHelp } = this.props;
     const bucketKey = bucket.get('key');
+    const dataGuideStep = `checkbox-aggregation-option:${bucketKey}`;
     const bucketDisplay = splitDisplayName
       ? bucketKey.split(BUCKET_NAME_SPLITTER)[1]
       : bucketKey;
@@ -130,7 +131,7 @@ class CheckboxAggregation extends Component {
               this.onSelectionChange(bucketKey, checked);
             }}
           >
-            {bucketDisplay}
+            <span data-guide-step={dataGuideStep}>{bucketDisplay}</span>
             {bucketHelp &&
               CheckboxAggregation.renderBucketHelpTooltip(
                 bucketHelp.get(bucketKey)

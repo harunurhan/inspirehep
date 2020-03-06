@@ -19,8 +19,7 @@
     "test:size": "bundlesize",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "eject": "react-scripts eject",
-    "lint":
-      "./node_modules/eslint/bin/eslint.js ./src --ext .js,.jsx --config .eslintrc"
+    "lint": "./node_modules/eslint/bin/eslint.js ./src --ext .js,.jsx --config .eslintrc"
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.0",
@@ -53,6 +52,7 @@
     "react-dom": "^16.8.3",
     "react-helmet": "^5.2.1",
     "react-image": "^2.2.1",
+    "react-joyride": "^2.2.1",
     "react-latex-next": "^1.1.0",
     "react-loadable": "^5.4.0",
     "react-media": "^1.9.2",
@@ -94,5 +94,10 @@
     "source-map-explorer": "^2.3.1",
     "webpack-filter-warnings-plugin": "^1.2.1"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"]
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
